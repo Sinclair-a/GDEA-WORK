@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>GDEA</title>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div id="container">
+    <el-container v-loading="loading">
+      <el-header>
+        <el-menu :default-active="select.activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+          <el-menu-item index="1">Home</el-menu-item>
+          <el-submenu index="2">
+            <template slot="title">Manage Compoments</template>
+            <el-menu-item index="2-1">Sensors</el-menu-item>
+            <el-menu-item index="2-2">Switches</el-menu-item>
+            <el-menu-item index="2-3">Others</el-menu-item>
+          </el-submenu>
+          <el-menu-item index="3" style="float: right;margin-right: 30px;" @click="logout()">Logout</el-menu-item>
+        </el-menu>
+      </el-header>
+
+      <el-main class="layout">
+        <div class="welcome">
+          {{username}}，{{time}}好
+          <div class="greetings">
+            {{greetings}}
+          </div>
+        </div>
+        <el-row :gutter="20" class="row">
+          <el-col :span="6" v-for="item in overview" :key="overview">
+            <el-card id="dashboard" class="center">
+              <el-progress type="dashboard" :percentage="item.percentage"></el-progress>
+              <div class="dashboardTitle">{{item.title}}</div>
+            </el-card>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20" class="row">
+          <el-col :span="12">
+            <el-card >
+              <div slot="header" class="clearfix">
+                <span>消息日志</span>
+                <el-button type="text" style="float: right; padding: 3px 0" @click="clearMsg()">清除</el-button>
+              </div>
+              <div v-for="msg in message" :key="msg" class="text item">
+                {{msg}}
+              </div>
+            </el-card >
+          </el-col>
+          <el-col :span="12">
+            <el-card  v-for="item in overview" :key="threshold" style="margin-bottom: 20px;">
+              <span class="demonstration">Set {{item.title}} Alarm threshold</span>
+              <el-slider v-model="item.ts" show-input ></el-slider>
+            </el-card>
+          </el-col>
+        </el-row>
+
+      </el-main>
+    </el-container>
+  </div>
+
+  <div class="container">
+  </div>
+
+</body>
+
+
+
+<!-- 引入组件库 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
+<script>
+  let container = new Vue({
+    el: '#container',
+    data: {
+      loading:true,
+      username:"曾可",
+      time:"早上",
+      greetings:"我孙笑川在这祝你逢补考必过！",
+      threshold:60,
+      navigations: [
+
+      ],
+      message:[
+        "大家笑一笑就好",
+        "我是你哥哥，我们两个都是你妈的儿子",
+        "本来其实我这个人是个非常儒雅随和的一个人，我不喜欢骂脏话，但是你们是经常在嘴臭，对不对？",
+        "你吼那là么大声干什么嘛？哎你的态度能不能好一点哦？那我凭什么关窗嘛？那你去物管啊！你再骂？"
+      ],
+      select: {
+        activeIndex: '1'
+      },
+      overview: [
+        {
+          title: "Sensor 1",
+          percentage: 24,
+          ts:13
+        }, {
+          title: "Sensor 2",
+          percentage: 48,
+          ts:26
+        }, {
+          title: "Sensor 3",
+          percentage: 70,
+          ts:60
+        }, {
+          title: "Sensor 4",
+          percentage: 99,
+          ts:88
+        },
+      ]
+    },
+    methods: {
+      handleSelect(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      clearMsg() {
+        this.message=[];
+        this.$notify({
+          title:"成功",
+          message:"已清除所有消息",
+          type:'success'
+        })
+      },
+      logout() {
+        this.$confirm('Are you sure to log out your account?', 'Logout', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Logout Successfully'
+          });
+        });
+      }
+    },
+    mounted() {
+      this.loading=false;
+    }
+  })
+
+  // let dashboard = new Vue({
+  //   el: '#dashboard',
+  //   data: {
+  //   }
+  // })
+</script>
+
+</html>

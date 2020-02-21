@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue学习</title>
+    <style>  
+    /* 有v-cloak时，不显示html */
+        [v-cloak] {
+            display:none
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+        <h>{{fullname}}</h>
+    </div>
+
+    <script src="../vue.js"></script>
+    <script>
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    lastname: '杜',
+                    firstname: '志攀',
+                },
+                computed: {
+                    fullname: function() {
+                        return this.lastname + this.firstname;
+                    }
+                },
+            })
+    </script>
+
+
+
+</body>
+
+</html>

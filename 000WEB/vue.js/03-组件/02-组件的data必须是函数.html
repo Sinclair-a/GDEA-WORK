@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue学习</title>
+</head>
+
+<body>
+    <template id="cpnC">
+        <div>
+            <h2>当前计数：{{counter}}</h2>
+            <button @click="increase()">+</button>
+            <button @click="decrease()">-</button>
+        </div>
+    </template>
+
+    <div id="app">
+        <cpn></cpn>
+        <cpn></cpn>
+        <cpn></cpn>
+        <cpn></cpn> 
+        <cpn></cpn>
+    </div>
+
+    <script src="../vue.js"></script>
+    <script>
+        // const obj = {      // //如果取消注释并且return obj，将无法复用组件。原因：每个组件使用同一个对象，将互相影响。
+        //     counter: 0,
+        // }
+
+        Vue.component('cpn', {
+            template: '#cpnC',
+            data() {
+                return {         
+                    counter: 0,  
+                }
+            },
+            methods: {
+                increase: function () {
+                    this.counter++;
+                },
+                decrease: function () {
+                    this.counter--;
+                },
+            }
+        })
+        const app = new Vue({
+            el: '#app',
+        })
+    </script>
+</body>
+
+
+
+</html>

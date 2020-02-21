@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>vue学习</title>
+</head>
+
+<body>
+    <div id="app">
+        <cpn1></cpn1>
+    </div>
+    <!-- 父组件 -->
+    <template id="cpn1">
+        <div>
+            <h>{{fmsg}}</h>
+            <cpn2 :title="fmsg" :人名="cper"></cpn2>
+        </div>
+    </template>
+    <!-- 子组件     -->
+    <template id="cpn2">
+        <div>
+            <ul>
+                <li v-for="item in 人名">{{item}}</li> <!-- item是个名字可以随意 -->
+            </ul>
+            <h>{{title}}</h>
+        </div>
+    </template>
+
+
+</body>
+<script src="../vue.js"></script>
+<script>
+    const random = new Vue({
+        el: '#app',
+        components: {
+            cpn1: {
+                template: '#cpn1',
+                data() {
+                    return {
+                        cper: ['李银河', '王二'],
+                        fmsg: '父组件的数据',
+                    }
+                },
+                components: {
+                    cpn2: {
+                        template: '#cpn2',
+                        //数组形式传值
+                        //props: ['title'],
+                        //对象传值
+                        props: {
+                            //类型限制
+                            人名: {
+                                type: Array,
+                                default() {
+                                    return ['defaulttttttt'];
+                                } 
+                                },
+                            //类型限制+默认值
+                            title: {
+                                type: String,
+                                default: 'defaulttttttt',
+                                required: true,
+                            },
+                        },
+                        data() {
+                            return { zmsg: '子组件的数据' }
+                        },
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+</html>
