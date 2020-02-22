@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>vue学习</title>
+</head>
+
+<body>
+  <div id="app">
+    <cpn><span slot="left">内容替换了谁</span></cpn>
+    <cpn><span slot="center">内容替换了谁</span></cpn>
+    <cpn><span slot="rigth">内容替换了谁</span></cpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <slot name="left"><span>左边</span></slot>
+      <slot name="center"><span>中间</span ></slot>
+      <slot name="rigth"><span>右边</span></slot>
+    </div>
+  </template>
+
+  <script src="../vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      components: {
+        cpn: {
+          template: '#cpn',
+        }
+      }
+    })
+  </script>
+
+
+
+</body>
+
+</html>
